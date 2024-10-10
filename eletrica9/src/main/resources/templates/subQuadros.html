@@ -51,8 +51,9 @@
 
 			celulaNome.textContent = quadro.nome;
 
-			const linkEditar = criarLink('Editar', "/quadro/" + quadro.id
-					+ "/editar");
+
+			const linkEditar = criarLink('Editar', "/quadro/" + quadro.id + "/editarSubQuadro");
+			
 			const linkExcluir = criarLink('Excluir', "/quadro/" + quadro.id
 					+ "/delete");
 			const linkCopiar = criarLink('Copiar', "/quadro/" + quadro.id

@@ -101,17 +101,6 @@ public class QuadroControle {
 		return "redirect:/fonte/" + fonteId + "/quadro";
 	}
 
-/*	@GetMapping("/subQuadros.html")
-	public String subQuadros(@RequestParam UUID quadroId, Model model) {
-		Quadro quadro = quadroServico.buscaPorId(quadroId);
-		Set<Quadro> subQuadros = quadro.getQuadrosFilhos(); // Busca os subquadros
-		model.addAttribute("quadros", subQuadros); // Adiciona os subquadros ao modelo
-		model.addAttribute("quadroId", quadroId);
-		model.addAttribute("projetoId", quadro.getFonte().getProjeto().getId());
-		model.addAttribute("fonteId", quadro.getFonte().getId());
-		return "subQuadros";
-	}*/
-
 	@GetMapping("/quadro/entrada/subquadro/{quadroId}")
 	public String entradaSubQuadro(@PathVariable UUID quadroId, Model model) {
 		Quadro quadroPai = quadroServico.buscaPorId(quadroId);
@@ -132,5 +121,32 @@ public class QuadroControle {
 		model.addAttribute("fonteId", quadro.getFonte().getId());
 		return "subQuadros";
 	}
+
+	@PostMapping("/subquadro/atualizar")
+	public String atualizarSubQuadro(@ModelAttribute Quadro quadro) {
+		quadroServico.update(quadro);
+		UUID quadroPaiId = quadro.getQuadroPai().getId();
+		return "redirect:/quadro/" + quadroPaiId + "/subquadro";
+	}
+
+	@GetMapping("/quadro/{id}/editarSubQuadro")
+	public String editarSubQuadro(@PathVariable UUID id, Model model) {
+		Quadro quadro = quadroServico.buscaPorId(id);
+		model.addAttribute("quadro", quadro);
+		if (quadro.getFonte() != null) { // Adicione esta verificação
+			model.addAttribute("fonteId", quadro.getFonte().getId()); // Adicione o ID da fonte ao modelo
+		}
+		return "editar_subQuadro";
+	}
+	
+
+@GetMapping("/quadro/{id}/subquadro")
+public String listarSubQuadros(@PathVariable UUID id, Model model) {
+    Quadro quadro = quadroServico.buscaPorId(id);
+    Set<Quadro> subQuadros = quadro.getQuadrosFilhos();
+    model.addAttribute("quadros", subQuadros);
+    return "subQuadros";
+}
+
 
 }
