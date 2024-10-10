@@ -1,0 +1,19 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Nova Fonte</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Nova Fonte</h1>
+	<!-- Formulário para a entrada de dados da nova fonte -->
+	<form th:action="@{/fonte/salvar}" th:object="${fonte}" method="post">
+		<!-- Campo oculto para o ID do projeto -->
+		<input type="hidden" th:name="projetoId" th:value="${projetoId}">
+		<label for="nome">Nome da Fonte:</label><br> <input type="text"
+			id="nome" th:field="*{nome}"><br> <input type="submit"
+			value="Salvar">
+	</form>
+</body>
+</html>

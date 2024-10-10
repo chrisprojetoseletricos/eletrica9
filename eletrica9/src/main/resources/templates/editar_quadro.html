@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Editar Quadro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Editar Quadro</h1>
+	<!-- Formulário para a edição de dados da quadro -->
+	<form th:action="@{/quadro/atualizar}" th:object="${quadro}"
+		method="post">
+		<!-- Campo oculto para o ID da quadro -->
+		<input type="hidden" th:field="*{id}">
+		<!-- Campo oculto para o ID do projeto -->
+		<input type="hidden" th:name="fonteId" th:value="${quadro.fonte.id}">
+		<label for="nome">Nome do Quadro:</label><br> <input type="text"
+			id="nome" th:field="*{nome}"><br> <input type="submit"
+			value="Atualizar">
+	</form>
+</body>
+</html>

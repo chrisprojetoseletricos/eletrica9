@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SubQuadro</title>
+</head>
+<body>
+	<h1>SubQuadro</h1>
+	<a th:href="@{/fonte/{fonteId}/quadro(fonteId=${fonteId})}">Voltar
+		para Quadro</a>
+	<br>
+	<br>
+	<a
+		th:href="@{/quadro/entrada/subquadro/{quadroId}(quadroId=${quadroId})}"
+		class="btn btn-primary">Novo SubQuadro</a>
+	<table id="quadrosTable">
+		<thead>
+			<tr>
+				<th style="text-align: left;">Nome</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- Linhas serão adicionadas aqui -->
+		</tbody>
+	</table>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		const urlParams = new URLSearchParams(window.location.search);
+		const quadroId = urlParams.get('quadroId');
+		const quadros = /*[[${quadros}]]*/[];
+		const projetoId = /*[[${projetoId}]]*/''; // Adicione esta linha para obter o ID do projeto
+		const fonteId = /*[[${fonteId}]]*/''; // Adicione esta linha para obter o ID da fonte
+
+		function adicionarQuadro(quadro) {
+			const tabela = document.getElementById('quadrosTable')
+					.getElementsByTagName('tbody')[0];
+			const novaLinha = tabela.insertRow();
+			const celulaNome = novaLinha.insertCell(0);
+			const celulaEditar = novaLinha.insertCell(1);
+			const celulaExcluir = novaLinha.insertCell(2);
+			const celulaCopiar = novaLinha.insertCell(3);
+			const celulaSubQuadro = novaLinha.insertCell(4);
+			const celulaCircuito = novaLinha.insertCell(5);
+
+			celulaNome.textContent = quadro.nome;
+
+			const linkEditar = criarLink('Editar', "/quadro/" + quadro.id
+					+ "/editar");
+			const linkExcluir = criarLink('Excluir', "/quadro/" + quadro.id
+					+ "/delete");
+			const linkCopiar = criarLink('Copiar', "/quadro/" + quadro.id
+					+ "/copiar");
+			const linkSubQuadros = criarLink('SubQuadros',
+					"/subQuadros.html?quadroId=" + quadro.id + "&projetoId="
+							+ projetoId);
+			const linkCircuitos = criarLink('Circuitos',
+					"/circuitos.html?quadroId=" + quadro.id + "&projetoId="
+							+ projetoId);
+
+			celulaEditar.appendChild(linkEditar);
+			celulaExcluir.appendChild(linkExcluir);
+			celulaCopiar.appendChild(linkCopiar);
+			celulaSubQuadro.appendChild(linkSubQuadros);
+			celulaCircuito.appendChild(linkCircuitos);
+		}
+
+		function criarLink(texto, href) {
+			const link = document.createElement('a');
+			link.textContent = texto;
+			link.href = href;
+			return link;
+		}
+
+		quadros.forEach(adicionarQuadro);
+		/*]]>*/
+	</script>
+</body>
+</html>
+

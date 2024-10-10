@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Editar Projeto</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Editar Projeto</h1>
+	<!-- Formulário para a edição de dados do projeto -->
+	<form th:action="@{/projeto/atualizar}" th:object="${projeto}"
+		method="post">
+		<input type="hidden" th:field="*{id}">
+		<!-- Campo oculto para manter o ID do projeto -->
+		<label for="nome">Nome do Projeto:</label><br> <input type="text"
+			id="nome" th:field="*{nome}"><br> <input type="submit"
+			value="Atualizar">
+	</form>
+</body>
+</html>

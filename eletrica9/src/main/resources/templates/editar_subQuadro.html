@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Editar SubQuadro</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Editar SubQuadro</h1>
+	<!-- Formulário para a edição de dados do SubQuadro -->
+	<form th:action="@{/quadro/atualizar}" th:object="${quadro}"
+		method="post">
+		<!-- Campo oculto para o ID do SubQuadro -->
+		<input type="hidden" th:field="*{id}">
+		<!-- Campo oculto para o ID da fonte -->
+		<input type="hidden" th:name="fonteId" th:value="${quadro.fonte.id}">
+		<label for="nome">Nome do SubQuadro:</label><br> <input
+			type="text" id="nome" th:field="*{nome}"><br> <label
+			for="pot100PercDem">Potência 100% Demanda:</label><br> <input
+			type="text" id="pot100PercDem" th:field="*{pot100PercDem}"><br>
+		<input type="submit" value="Atualizar">
+	</form>
+</body>
+</html>

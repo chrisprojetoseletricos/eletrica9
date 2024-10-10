@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projetos</title>
+</head>
+<body>
+	<h1>Projetos</h1>
+	<a href="/projeto/entrada" class="btn btn-primary">Novo Projeto</a>
+	<br>
+	<br>
+	<table id="projetosTable">
+		<thead>
+			<tr>
+				<th style="text-align: left;">Nome</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- Linhas serão adicionadas aqui -->
+		</tbody>
+	</table>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		const projetos = /*[[${projetos}]]*/[];
+
+		function adicionarProjeto(projeto) {
+			const tabela = document.getElementById('projetosTable')
+					.getElementsByTagName('tbody')[0];
+			const novaLinha = tabela.insertRow();
+
+			const celulaNome = novaLinha.insertCell(0);
+			const celulaEditar = novaLinha.insertCell(1);
+			const celulaExcluir = novaLinha.insertCell(2);
+			const celulaCopiar = novaLinha.insertCell(3);
+
+			// Cria um elemento de link e define o nome do projeto como o texto do link
+			const linkProjeto = document.createElement('a');
+			linkProjeto.textContent = projeto.nome;
+			linkProjeto.href = "/projeto/" + projeto.id + "/fonte"; // Substitua 'projeto.id' pelo ID real do projeto
+
+			// Adiciona o link à célula do nome
+			celulaNome.appendChild(linkProjeto);
+
+			// Cria elementos de link para Editar, Excluir e Copiar
+			const linkEditar = document.createElement('a');
+			linkEditar.textContent = 'Editar';
+			linkEditar.href = "/projeto/" + projeto.id + "/editar"; // Substitua 'projeto.id' pelo ID real do projeto
+
+			// Cria um formulário de exclusão
+			const formExcluir = document.createElement('form');
+			formExcluir.method = 'post';
+			formExcluir.action = "/projeto/" + projeto.id + "/delete";
+
+			// Cria um botão de submissão para o formulário e o estiliza como um link
+			const botaoExcluir = document.createElement('button');
+			botaoExcluir.textContent = 'Excluir';
+			botaoExcluir.style.border = 'none';
+			botaoExcluir.style.background = 'none';
+			botaoExcluir.style.color = 'blue';
+			botaoExcluir.style.textDecoration = 'underline';
+			botaoExcluir.style.cursor = 'pointer';
+
+			// Adiciona o botão ao formulário
+			formExcluir.appendChild(botaoExcluir);
+
+			// Cria um formulário de cópia
+			const formCopiar = document.createElement('form');
+			formCopiar.method = 'post';
+			formCopiar.action = "/projeto/" + projeto.id + "/copiar";
+
+			// Cria um botão de submissão para o formulário e o estiliza como um link
+			const botaoCopiar = document.createElement('button');
+			botaoCopiar.textContent = 'Copiar';
+			botaoCopiar.style.border = 'none';
+			botaoCopiar.style.background = 'none';
+			botaoCopiar.style.color = 'blue';
+			botaoCopiar.style.textDecoration = 'underline';
+			botaoCopiar.style.cursor = 'pointer';
+
+			// Adiciona o botão ao formulário
+			formCopiar.appendChild(botaoCopiar);
+
+			// Adiciona os links às células correspondentes
+			celulaEditar.appendChild(linkEditar);
+			celulaExcluir.appendChild(formExcluir);
+			celulaCopiar.appendChild(formCopiar);
+		}
+
+		projetos.forEach(adicionarProjeto);
+		/*]]>*/
+	</script>
+
+</body>
+</html>

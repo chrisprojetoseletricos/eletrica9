@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Editar Fonte</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Editar Fonte</h1>
+	<!-- Formulário para a edição de dados da fonte -->
+	<form th:action="@{/fonte/atualizar}" th:object="${fonte}"
+		method="post">
+		<!-- Campo oculto para o ID da fonte -->
+		<input type="hidden" th:field="*{id}">
+		<!-- Campo oculto para o ID do projeto -->
+		<input type="hidden" th:name="projetoId"
+			th:value="${fonte.projeto.id}"> <label for="nome">Nome
+			da Fonte:</label><br> <input type="text" id="nome" th:field="*{nome}"><br>
+		<input type="submit" value="Atualizar">
+	</form>
+</body>
+</html>

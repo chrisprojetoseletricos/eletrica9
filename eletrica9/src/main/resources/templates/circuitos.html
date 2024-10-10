@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quadros</title>
+</head>
+
+<body>
+	<h1>Quadros</h1>
+
+
+	<a th:href="@{/projeto/{projetoId}/fontes(projetoId=${projetoId})}">Voltar
+		para Fontes</a>
+
+	<br>
+	<br>
+	<a th:href="@{/quadro/entrada/{fonteId}(fonteId=${fonteId})}"
+		class="btn btn-primary">Novo Quadro</a>
+	<table id="quadrosTable">
+		<thead>
+			<tr>
+				<th style="text-align: left;">Nome</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- Linhas serão adicionadas aqui -->
+		</tbody>
+	</table>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		const quadros = /*[[${quadros}]]*/[];
+
+		function adicionarQuadro(quadro) {
+			const tabela = document.getElementById('quadrosTable')
+				.getElementsByTagName('tbody')[0];
+			const novaLinha = tabela.insertRow();
+
+			const celulaNome = novaLinha.insertCell(0);
+			const celulaEditar = novaLinha.insertCell(1);
+			const celulaExcluir = novaLinha.insertCell(2);
+			const celulaCopiar = novaLinha.insertCell(3);
+
+			// Define o nome do quadro como o texto da célula
+			celulaNome.textContent = quadro.nome;
+			
+			
+
+			// Cria um campo oculto para o ID do projeto
+			const inputProjetoId = document.createElement('input');
+			inputProjetoId.type = 'hidden';
+			inputProjetoId.name = 'projetoId';
+
+			// Obtém o ID do projeto a partir da URL
+			const urlParams = new URLSearchParams(window.location.search);
+			const projetoId = urlParams.get('projetoId');
+
+			inputProjetoId.value = projetoId; // Substitua 'projetoId' pelo ID real do projeto
+			
+			// Cria elementos de link para Editar, Excluir e Copiar
+			const linkEditar = document.createElement('a');
+			linkEditar.textContent = 'Editar';
+			linkEditar.href = "/quadro/" + quadro.id + "/editar"; // Substitua 'quadro.id' pelo ID real do quadro
+
+			const formExcluir = document.createElement('form');
+			formExcluir.method = 'post';
+			formExcluir.action = "/quadro/" + quadro.id + "/delete";
+
+			const botaoExcluir = document.createElement('button');
+			botaoExcluir.textContent = 'Excluir';
+			botaoExcluir.style.border = 'none';
+			botaoExcluir.style.background = 'none';
+			botaoExcluir.style.color = 'blue';
+			botaoExcluir.style.textDecoration = 'underline';
+			botaoExcluir.style.cursor = 'pointer';
+
+			formExcluir.appendChild(botaoExcluir);
+
+			const formCopiar = document.createElement('form');
+			formCopiar.method = 'post';
+			formCopiar.action = "/quadro/" + quadro.id + "/copiar";
+
+			const botaoCopiar = document.createElement('button');
+			botaoCopiar.textContent = 'Copiar';
+			botaoCopiar.style.border = 'none';
+			botaoCopiar.style.background = 'none';
+			botaoCopiar.style.color = 'blue';
+			botaoCopiar.style.textDecoration = 'underline';
+			botaoCopiar.style.cursor = 'pointer';
+
+			formCopiar.appendChild(botaoCopiar);
+
+			// Adiciona os links às células correspondentes
+			celulaEditar.appendChild(linkEditar);
+			celulaExcluir.appendChild(formExcluir);
+			celulaCopiar.appendChild(formCopiar);
+		}
+
+		quadros.forEach(adicionarQuadro);
+		/*]]>*/
+	</script>
+
+</body>
+
+</html>
